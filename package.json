@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-homeworks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andysmokk/nodejs-homeworks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andysmokk/nodejs-homeworks/issues"
+  },
+  "homepage": "https://github.com/andysmokk/nodejs-homeworks#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
