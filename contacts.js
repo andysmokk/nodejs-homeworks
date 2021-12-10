@@ -16,9 +16,11 @@ const listContacts = async () => {
   return await readContent();
 };
 
-function getContactById(contactId) {
-  // ...твой код
-}
+const getContactById = async (contactId) => {
+  const contacts = await readContent();
+  const [contact] = contacts.filter((contact) => contact.id === contactId);
+  return contact;
+};
 
 function removeContact(contactId) {
   // ...твой код

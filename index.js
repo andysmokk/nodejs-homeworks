@@ -1,5 +1,5 @@
 const { Command } = require("commander");
-const { listContacts } = require("./contacts");
+const { listContacts, getContactById } = require("./contacts");
 
 const program = new Command();
 
@@ -14,7 +14,7 @@ program.parse(process.argv);
 
 const argv = program.opts();
 
-console.log(listContacts);
+// console.log(listContacts);
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
@@ -24,7 +24,14 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
       break;
 
     case "get":
-      // ... id
+      const contactById = await getContactById(id);
+      if (contactById) {
+        console.log("Contact found");
+        console.log(contactById);
+        return;
+      }
+      console.log("Contact not found");
+
       break;
 
     case "add":
