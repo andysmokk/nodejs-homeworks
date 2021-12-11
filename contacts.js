@@ -23,9 +23,23 @@ const getContactById = async (contactId) => {
   return contact;
 };
 
-function removeContact(contactId) {
-  // ...твой код
-}
+const removeContact = async (contactId) => {
+  const contacts = await readContent();
+  // const updatedContacts = contacts.filter(
+  //   (contact) => contact.id !== contactId
+  // );
+  // await fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
+  // return updatedContacts;
+  const contactIndex = contacts.findIndex(
+    (contact) => contact.id === contactId
+  );
+  if (contactIndex === -1) {
+    return;
+  }
+  const removedContact = contacts.splice(contactIndex, 1);
+  await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+  return removedContact;
+};
 
 const addContact = async (name, email, phone) => {
   const contacts = await readContent();

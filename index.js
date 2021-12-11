@@ -1,5 +1,10 @@
 const { Command } = require("commander");
-const { listContacts, getContactById, addContact } = require("./contacts");
+const {
+  listContacts,
+  getContactById,
+  addContact,
+  removeContact,
+} = require("./contacts");
 
 const program = new Command();
 
@@ -31,7 +36,6 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
         return;
       }
       console.log("Contact not found");
-
       break;
 
     case "add":
@@ -41,7 +45,12 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
       break;
 
     case "remove":
-      // ... id
+      const removedContact = await removeContact(id);
+      if (removedContact) {
+        console.log("Сontact deleted");
+        console.log(removedContact);
+      }
+      console.log("Сontact not found");
       break;
 
     default:
