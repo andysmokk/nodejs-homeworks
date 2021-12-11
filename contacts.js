@@ -46,7 +46,7 @@ const addContact = async (name, email, phone) => {
 
   const existingContact = await contacts.find((contact) => {
     if (contact.name === name) {
-      return contact.name;
+      return contact;
     }
   });
 
