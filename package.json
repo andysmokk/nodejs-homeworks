@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/andysmokk/nodejs-homeworks#readme",
   "devDependencies": {
+    "colors": "^1.4.0",
     "nodemon": "^2.0.15"
   },
   "dependencies": {

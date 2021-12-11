@@ -51,12 +51,16 @@ const addContact = async (name, email, phone) => {
   });
 
   if (existingContact?.email === newContact.email) {
-    console.log(`Contact with this email: ${newContact.email} already exists`);
+    console.log(
+      `Contact with this email: ${newContact.email} already exists`.bgRed
+    );
     return;
   }
 
   if (existingContact?.phone === newContact.phone) {
-    console.log(`Contact with this phone: ${newContact.phone} already exists`);
+    console.log(
+      `Contact with this phone: ${newContact.phone} already exists`.bgRed
+    );
     return;
   }
 

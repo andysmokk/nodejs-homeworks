@@ -1,4 +1,5 @@
 const { Command } = require("commander");
+const colors = require("colors");
 const {
   listContacts,
   getContactById,
@@ -23,17 +24,18 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
       const contacts = await listContacts();
+      console.log("Current contact list".underline.yellow);
       console.table(contacts);
       break;
 
     case "get":
       const contactById = await getContactById(id);
       if (contactById) {
-        console.log(`Contact with id: ${id} found`);
+        console.log(`Contact with id: ${id} found`.underline.yellow);
         console.log(contactById);
         return;
       }
-      console.log(`Contact with id: ${id} not found`);
+      console.log(`Contact with id: ${id} not found`.bgRed);
       break;
 
     case "add":
@@ -41,21 +43,21 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
       if (contact === undefined) {
         return;
       }
-      console.log("Added new contact");
+      console.log("Added new contact".underline.yellow);
       console.log(contact);
       break;
 
     case "remove":
       const removedContact = await removeContact(id);
       if (removedContact) {
-        console.log("Contact deleted");
+        console.log("Contact deleted".underline.yellow);
         console.log(removedContact);
         const contacts = await listContacts();
-        console.log("Updated contact list");
+        console.log("Updated contact list".underline.yellow);
         console.table(contacts);
         return;
       }
-      console.log(`Contact with id: ${id} not found`);
+      console.log(`Contact with id: ${id} not found`.bgRed);
       break;
 
     default:
@@ -63,4 +65,4 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
-invokeAction(argv).then(() => console.log("Successfully"));
+invokeAction(argv).then(() => console.log("Successfully".underline.yellow));
