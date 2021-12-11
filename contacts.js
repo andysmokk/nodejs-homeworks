@@ -29,6 +29,7 @@ const removeContact = async (contactId) => {
   //   (contact) => contact.id !== contactId
   // );
   // await fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
+  //console.log(updatedContacts)
   // return updatedContacts;
   const contactIndex = contacts.findIndex(
     (contact) => contact.id === contactId
