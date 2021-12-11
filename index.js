@@ -1,5 +1,6 @@
 const { Command } = require("commander");
 const colors = require("colors");
+
 const {
   listContacts,
   getContactById,
