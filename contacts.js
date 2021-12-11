@@ -10,9 +10,6 @@ const readContent = async () => {
   return contacts;
 };
 
-// const contactsPath = path.resolve("./db/contacts.json");
-// console.log(contacts);
-
 const listContacts = async () => {
   return await readContent();
 };
@@ -29,14 +26,15 @@ const removeContact = async (contactId) => {
   //   (contact) => contact.id !== contactId
   // );
   // await fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
-  //console.log(updatedContacts)
   // return updatedContacts;
   const contactIndex = contacts.findIndex(
     (contact) => contact.id === contactId
   );
+
   if (contactIndex === -1) {
     return;
   }
+
   const removedContact = contacts.splice(contactIndex, 1);
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
   return removedContact;
@@ -45,6 +43,23 @@ const removeContact = async (contactId) => {
 const addContact = async (name, email, phone) => {
   const contacts = await readContent();
   const newContact = { name, email, phone, id: crypto.randomUUID() };
+
+  const existingContact = await contacts.find((contact) => {
+    if (contact.name === name) {
+      return contact.name;
+    }
+  });
+
+  if (existingContact?.email === newContact.email) {
+    console.log(`Contact with this email: ${newContact.email} already exists`);
+    return;
+  }
+
+  if (existingContact?.phone === newContact.phone) {
+    console.log(`Contact with this phone: ${newContact.phone} already exists`);
+    return;
+  }
+
   contacts.push(newContact);
   fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
   return newContact;

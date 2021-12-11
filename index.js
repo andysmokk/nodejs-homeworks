@@ -19,8 +19,6 @@ program.parse(process.argv);
 
 const argv = program.opts();
 
-// console.log(listContacts);
-
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
@@ -31,15 +29,18 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
     case "get":
       const contactById = await getContactById(id);
       if (contactById) {
-        console.log("Contact found");
+        console.log(`Contact with id: ${id} found`);
         console.log(contactById);
         return;
       }
-      console.log("Contact not found");
+      console.log(`Contact with id: ${id} not found`);
       break;
 
     case "add":
       const contact = await addContact(name, email, phone);
+      if (contact === undefined) {
+        return;
+      }
       console.log("Added new contact");
       console.log(contact);
       break;
@@ -47,10 +48,14 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
     case "remove":
       const removedContact = await removeContact(id);
       if (removedContact) {
-        console.log("Сontact deleted");
+        console.log("Contact deleted");
         console.log(removedContact);
+        const contacts = await listContacts();
+        console.log("Updated contact list");
+        console.table(contacts);
+        return;
       }
-      console.log("Сontact not found");
+      console.log(`Contact with id: ${id} not found`);
       break;
 
     default:
@@ -58,4 +63,4 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
-invokeAction(argv).then(() => console.log("Success"));
+invokeAction(argv).then(() => console.log("Successfully"));
