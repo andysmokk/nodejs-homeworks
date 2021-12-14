@@ -1,69 +1,71 @@
-const { Command } = require("commander");
-const colors = require("colors");
+const { invokeAction } = require("./controllers/index");
 
-const {
-  listContacts,
-  getContactById,
-  addContact,
-  removeContact,
-} = require("./controllers/contacts/index");
+// const { Command } = require("commander");
+// const colors = require("colors");
 
-const program = new Command();
+// const {
+//   listContacts,
+//   getContactById,
+//   addContact,
+//   removeContact,
+// } = require("./controllers/contacts/index");
 
-program
-  .requiredOption("-a, --action <type>", "choose action")
-  .option("-i, --id <type>", "user id")
-  .option("-n, --name <type>", "user name")
-  .option("-e, --email <type>", "user email")
-  .option("-p, --phone <type>", "user phone");
+// const program = new Command();
 
-program.parse(process.argv);
+// program
+//   .requiredOption("-a, --action <type>", "choose action")
+//   .option("-i, --id <type>", "user id")
+//   .option("-n, --name <type>", "user name")
+//   .option("-e, --email <type>", "user email")
+//   .option("-p, --phone <type>", "user phone");
 
-const argv = program.opts();
+// program.parse(process.argv);
 
-const invokeAction = async ({ action, id, name, email, phone }) => {
-  switch (action) {
-    case "list":
-      const contacts = await listContacts();
-      console.log("Current contact list".underline.yellow);
-      console.table(contacts);
-      break;
+// const argv = program.opts();
 
-    case "get":
-      const contactById = await getContactById(id);
-      if (contactById) {
-        console.log(`Contact with id: ${id} found`.underline.yellow);
-        console.log(contactById);
-        return;
-      }
-      console.log(`Contact with id: ${id} not found`.bgRed);
-      break;
+// const invokeAction = async ({ action, id, name, email, phone }) => {
+//   switch (action) {
+//     case "list":
+//       const contacts = await listContacts();
+//       console.log("Current contact list".underline.yellow);
+//       console.table(contacts);
+//       break;
 
-    case "add":
-      const contact = await addContact(name, email, phone);
-      if (contact === undefined) {
-        return;
-      }
-      console.log("Added new contact".underline.yellow);
-      console.log(contact);
-      break;
+//     case "get":
+//       const contactById = await getContactById(id);
+//       if (contactById) {
+//         console.log(`Contact with id: ${id} found`.underline.yellow);
+//         console.log(contactById);
+//         return;
+//       }
+//       console.log(`Contact with id: ${id} not found`.bgRed);
+//       break;
 
-    case "remove":
-      const removedContact = await removeContact(id);
-      if (removedContact) {
-        console.log("Contact deleted".underline.yellow);
-        console.log(removedContact);
-        const contacts = await listContacts();
-        console.log("Updated contact list".underline.yellow);
-        console.table(contacts);
-        return;
-      }
-      console.log(`Contact with id: ${id} not found`.bgRed);
-      break;
+//     case "add":
+//       const contact = await addContact(name, email, phone);
+//       if (contact === undefined) {
+//         return;
+//       }
+//       console.log("Added new contact".underline.yellow);
+//       console.log(contact);
+//       break;
 
-    default:
-      console.warn("\x1B[31m Unknown action type!");
-  }
-};
+//     case "remove":
+//       const removedContact = await removeContact(id);
+//       if (removedContact) {
+//         console.log("Contact deleted".underline.yellow);
+//         console.log(removedContact);
+//         const contacts = await listContacts();
+//         console.log("Updated contact list".underline.yellow);
+//         console.table(contacts);
+//         return;
+//       }
+//       console.log(`Contact with id: ${id} not found`.bgRed);
+//       break;
 
-invokeAction(argv).then(() => console.log("Successfully".underline.yellow));
+//     default:
+//       console.warn("\x1B[31m Unknown action type!");
+//   }
+// };
+
+// invokeAction(argv).then(() => console.log("Successfully".underline.yellow));

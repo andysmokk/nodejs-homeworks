@@ -1,3 +1,4 @@
+const fs = require("fs/promises");
 const { contactsPath, readContent } = require("./readContent");
 
 const removeContact = async (contactId) => {
