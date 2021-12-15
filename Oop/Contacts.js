@@ -17,8 +17,12 @@ const argv = program.opts();
 const contactsPath = path.resolve("./db/contacts.json");
 
 class Contacts {
-  constructor(name, email, phone) {
-    (this.name = name), (this.email = email), (this.phone = phone);
+  constructor(action, id, name, email, phone) {
+    this.name = name;
+    this.email = email;
+    this.phone = phone;
+    this.id = id;
+    this.action = action;
   }
 
   readContent = async () => {
@@ -75,7 +79,7 @@ class Contacts {
         break;
 
       case "add":
-        const contact = await addContact(name, email, phone);
+        const contact = await this.addContact(name, email, phone);
         if (contact === undefined) {
           return;
         }
@@ -100,6 +104,16 @@ class Contacts {
         console.warn("\x1B[31m Unknown action type!");
     }
   };
+
+  init = () => {
+    this.invokeAction(
+      this.action,
+      this.id,
+      this.name,
+      this.email,
+      this.phone
+    ).then(() => console.log("Successfully".underline.yellow));
+  };
 }
 
-module.exports = new Contacts();
+module.exports = new Contacts(argv);
