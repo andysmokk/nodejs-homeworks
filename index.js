@@ -1,5 +1,6 @@
 // const { invokeAction } = require("./controllers/index");
-const Contacts = require("./Oop/index");
+// const Contacts = require("./Oop/index");
+const Contacts = require("./OopStatic/index");
 
 // const { Command } = require("commander");
 // const colors = require("colors");
