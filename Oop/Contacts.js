@@ -31,6 +31,10 @@ class Contacts {
     return contacts;
   };
 
+  listContacts = async () => {
+    return await this.readContent();
+  };
+
   addContact = async (name, email, phone) => {
     const contacts = await this.readContent();
     const newContact = { name, email, phone, id: crypto.randomUUID() };
@@ -60,16 +64,42 @@ class Contacts {
     return newContact;
   };
 
+  getContactById = async (contactId) => {
+    const contacts = await this.readContent();
+    const [contact] = contacts.filter((contact) => contact.id === contactId);
+    return contact;
+  };
+
+  removeContact = async (contactId) => {
+    const contacts = await this.readContent();
+    // const updatedContacts = contacts.filter(
+    //   (contact) => contact.id !== contactId
+    // );
+    // await fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
+    // return updatedContacts;
+    const contactIndex = contacts.findIndex(
+      (contact) => contact.id === contactId
+    );
+
+    if (contactIndex === -1) {
+      return;
+    }
+
+    const removedContact = contacts.splice(contactIndex, 1);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+    return removedContact;
+  };
+
   invokeAction = async ({ action, id, name, email, phone }) => {
     switch (action) {
       case "list":
-        const contacts = await listContacts();
+        const contacts = await this.listContacts();
         console.log("Current contact list".underline.yellow);
         console.table(contacts);
         break;
 
       case "get":
-        const contactById = await getContactById(id);
+        const contactById = await this.getContactById(id);
         if (contactById) {
           console.log(`Contact with id: ${id} found`.underline.yellow);
           console.log(contactById);
@@ -88,11 +118,11 @@ class Contacts {
         break;
 
       case "remove":
-        const removedContact = await removeContact(id);
+        const removedContact = await this.removeContact(id);
         if (removedContact) {
           console.log("Contact deleted".underline.yellow);
           console.log(removedContact);
-          const contacts = await listContacts();
+          const contacts = await this.listContacts();
           console.log("Updated contact list".underline.yellow);
           console.table(contacts);
           return;
